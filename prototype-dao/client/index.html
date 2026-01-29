@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Randos</title>
+  <style>
+    body { font-family: Arial; margin: 20px; }
+    ul { list-style: none; padding: 0; }
+    li { padding: 8px; cursor: pointer; border-bottom: 1px solid #ddd; }
+    li:hover { background-color: #f0f0f0; }
+    #details { margin-top: 20px; border: 1px solid #ddd; padding: 10px; width: 300px; }
+  </style>
+</head>
+<body>
+  <h1>Randos</h1>
+  <ul id="listeRandos"></ul>
+
+  <div id="details">
+    <h2>Détails</h2>
+    <p id="detailContent">Cliquez sur une rando pour voir les détails</p>
+  </div>
+
+  <script src="Rando.js"></script>
+  <script src="RandoDAO.js"></script>
+  <script src="Application.js"></script>
+</body>
+</html>

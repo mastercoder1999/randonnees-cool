@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Randonnées cool</title>
+    <link rel="stylesheet" href="css/decoration/application.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style></style>
+    <script src="cordova.js"></script>
+    <!-- Model must be loaded first -->
+    <script src="js/modele/Randonnee.js"></script>
+    <!-- Then DAO -->
+    <script src="js/donnee/RandonneeDAO.js"></script>
+    <!-- Then all Views -->
+    <script src="js/vue/VueAccueil.js"></script>
+    <script src="js/vue/VueListeRandonnee.js"></script>
+    <script src="js/vue/VueRandonnee.js"></script>
+    <!-- Application controller last -->
+    <script defer src="Application.js"></script>
+</head>
+
+<body>
+    <div id="page-chargement-application">Chargement de l'application Randonnées cool</div>
+
+    <script type="plain/text" id="html-vue-accueil">
+        <div class="page">
+            <h1>Randonnées cool</h1>
+            <h2>Accueil</h2>
+            <a class="action btn-page-liste" href="#liste-randonnee">Page Liste</a>
+            <div class="speedometer">
+                <div class="speed-circle">
+                    <div class="arrow-icon">↗</div>
+                    <div class="speed-value">5 km/h</div>
+                </div>
+            </div>
+            <div class="info-box">
+                <p>bui du site, but du site, but du site, but du site, but du site, but du site, but du site, but du site, but du site, but du site, but du site, but du site, but du site, but du site, but du site, but du site, but du site, but du site, but du site, but du site.</p>
+            </div>
+        </div>
+    </script>
+
+    <script type="plain/text" id="html-vue-liste-randonnee">
+        <div class="page page-liste">
+            <h1>Randonnées cool</h1>
+            <h2>Liste</h2>
+
+            <div class="search-filter-container">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="search-input" placeholder="Rechercher...">
+                </div>
+                <button class="filter-btn">
+                    <span class="filter-icon">▼</span>
+                </button>
+            </div>
+
+            <div id="liste-randonnee-container">
+                <div class="randonnee-card">
+                    <h3 class="card-title">{Randonnee.nom}</h3>
+                    <div class="card-info">
+                        <span class="info-item">Difficulté : {Randonnee.difficulte}</span>
+                        <span class="info-item">Longueur : {Randonnee.duree}</span>
+                    </div>
+                    <a href="#randonnee/{Randonnee.id}" class="btn-detail">Détail</a>
+                </div>
+            </div>
+
+            <a href="#" class="action btn-retour">Retour à l'accueil</a>
+        </div>
+    </script>
+
+    <script type="plain/text" id="html-vue-randonnee">
+        <div class="page page-detail">
+            <h1>Randonnées cool</h1>
+            <h2>Détail</h2>
+
+            <div class="swipe-navigation">
+                <button class="swipe-btn swipe-left">
+                    <span>←</span>
+                </button>
+
+                <div class="detail-card">
+                    <h3 class="detail-title" id="randonnee-nom"></h3>
+
+                    <div class="detail-grid">
+                        <div class="detail-item detail-difficulte" id="randonnee-difficulte"></div>
+                        <div class="detail-item detail-longueur" id="randonnee-longueur"></div>
+                        <div class="detail-item detail-longitude" id="randonnee-longitude"></div>
+                        <div class="detail-item detail-latitude" id="randonnee-latitude"></div>
+                        <div class="detail-item detail-denivele" id="randonnee-denivele"></div>
+                    </div>
+                    <div id="map" style="height: 300px; margin-top: 20px; border-radius: 8px;"></div>
+                    <div class="like-section">
+                        <button class="like-btn" id="like-btn">
+                        </button>
+                    </div>
+                </div>
+
+                <button class="swipe-btn swipe-right">
+                    <span>→</span>
+                </button>
+            </div>
+
+            <a href="#liste-randonnee" class="action btn-retour-liste">Retour à la liste</a>
+        </div>
+    </script>
+</html>

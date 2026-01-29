@@ -1,0 +1,105 @@
+class VueRandonnee {
+    constructor() {
+        this.html = document.getElementById("html-vue-randonnee").innerHTML;
+        this.randonnee = null;
+        this.listeRandonnees = [];
+        this.indexActuel = 0;
+    }
+
+    initialiserRandonnee(randonnee) {
+        this.randonnee = randonnee;
+    }
+
+    setListeRandonnees(liste, index) {
+        this.listeRandonnees = liste;
+        this.indexActuel = index;
+    }
+
+    afficher() {
+        document.getElementsByTagName("body")[0].innerHTML = this.html;
+
+        this.afficherDetails();
+        this.initialiserSwipe();
+        this.afficherCarteRandonnee(this.randonnee.latitude, this.randonnee.longitude, this.randonnee.nom);
+    }
+
+    afficherDetails() {
+        document.getElementById("randonnee-nom").textContent = this.randonnee.nom;
+        document.getElementById("randonnee-difficulte").textContent = "Difficulté : " + this.randonnee.difficulte + "/10";
+        document.getElementById("randonnee-longueur").textContent = "Longueur : " + this.randonnee.distance + "km";
+        document.getElementById("randonnee-longitude").textContent = "Longitude : " + this.randonnee.longitude;
+        document.getElementById("randonnee-latitude").textContent = "Latitude : " + this.randonnee.latitude;
+        document.getElementById("randonnee-denivele").textContent = "Dénivelé : " + this.randonnee.denivele + "m";
+
+    }
+
+    initialiserSwipe() {
+        const btnLeft = document.querySelector(".swipe-left");
+        const btnRight = document.querySelector(".swipe-right");
+        const conteneur = document.querySelector(".page-detail");
+        let positionDepartX = 0;
+        let glissementEnCours = false;
+        const SEUIL = 60;
+
+        if (conteneur) {
+            conteneur.addEventListener("pointerdown", (e) => {
+                positionDepartX = e.clientX;
+                glissementEnCours = true;
+            });
+
+            conteneur.addEventListener("pointerup", (e) => {
+                if (!glissementEnCours) return;
+
+                const difference = e.clientX - positionDepartX;
+
+                if (difference > SEUIL) {
+                    this.swipeGauche();
+                } else if (difference < -SEUIL) {
+                    this.swipeDroite();
+                }
+
+                glissementEnCours = false;
+            });
+        }
+
+        if (btnLeft) btnLeft.addEventListener("click", () => this.swipeGauche());
+        if (btnRight) btnRight.addEventListener("click", () => this.swipeDroite());
+    }
+
+    swipeGauche() {
+        let nouveauIndex = this.indexActuel - 1;
+        if (nouveauIndex < 0) nouveauIndex = this.listeRandonnees.length - 1;
+        window.location.hash = "#randonnee/" + nouveauIndex;
+    }
+
+    swipeDroite() {
+        let nouveauIndex = this.indexActuel + 1;
+        if (nouveauIndex >= this.listeRandonnees.length) nouveauIndex = 0;
+        window.location.hash = "#randonnee/" + nouveauIndex;
+    }
+
+    afficherCarteRandonnee(lat, lon, nom) {
+        if (typeof L === "undefined") return;
+
+        const mapContainer = document.getElementById("map");
+        if (!mapContainer) return;
+
+        if (mapContainer._leaflet_id) {
+            mapContainer._leaflet_id = null;
+            mapContainer.innerHTML = "";
+        }
+
+        const map = L.map("map").setView([lat, lon], 13);
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            maxZoom: 19,
+            attribution:
+            '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+        }).addTo(map);
+
+        L.marker([lat, lon])
+            .addTo(map)
+            .bindPopup(`<b>${nom}</b><br>Randonnée ici.`)
+            .openPopup();
+    }
+}
