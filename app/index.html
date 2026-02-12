@@ -16,6 +16,7 @@
     <script src="js/vue/VueAccueil.js"></script>
     <script src="js/vue/VueListeRandonnee.js"></script>
     <script src="js/vue/VueRandonnee.js"></script>
+    <script src="js/vue/VueChecklist.js"></script>
     <!-- Application controller last -->
     <script defer src="Application.js"></script>
 </head>
@@ -27,6 +28,7 @@
         <div class="page">
             <h1>Randonnées cool</h1>
             <h2>Accueil</h2>
+            <a class="action btn-page-checklist" href="#checklist">Checklist</a>
             <a class="action btn-page-liste" href="#liste-randonnee">Page Liste</a>
         <div class="app">
             <div class="container">
@@ -113,4 +115,34 @@
             <a href="#liste-randonnee" class="action btn-retour-liste">Retour à la liste</a>
         </div>
     </script>
+    <script type="plain/text" id="html-vue-checklist">
+        <div class="page page-checklist">
+            <h1>Randonnées cool</h1>
+            <h2>Checklist</h2>
+            <div class="checklist-presets">
+                <label for="checklist-preset">Preset: </label>
+                <select id="checklist-preset">
+                    <option value="demi">Demi-journée</option>
+                    <option value="1j">1 jour</option>
+                    <option value="2j">2 jours</option>
+                </select>
+
+                <button class="btn" id="checklist-apply-preset-btn">Charger</button>
+            </div>
+
+            <div class="checklist-add">
+            <input id="checklist-input" type="text" placeholder="Ajouter un item (ex.: Eau, Lampe, Collation)">
+            <button class="btn" id="checklist-add-btn">Ajouter</button>
+            </div>
+
+            <div id="checklist-list" class="checklist-list"></div>
+
+            <div class="checklist-actions">
+            <button class="btn" id="checklist-reset-btn">Réinitialiser</button>
+            </div>
+
+            <a href="#" class="action btn-retour">Retour à l'accueil</a>
+        </div>
+    </script>
+
 </html>

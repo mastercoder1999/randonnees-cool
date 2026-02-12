@@ -1,10 +1,12 @@
 class Application {
-  constructor(window, RandonneeDAO, vueAccueil, vueListeRandonnee, vueRandonnee) {
+  constructor(window, RandonneeDAO, vueAccueil, vueListeRandonnee, vueRandonnee, vueChecklist) {
     this.window = window;
     this.RandonneeDAO = RandonneeDAO;
     this.vueAccueil = vueAccueil;
     this.vueListeRandonnee = vueListeRandonnee;
     this.vueRandonnee = vueRandonnee;
+    this.vueChecklist = new VueChecklist();
+
 
     // Store app instance globally for access from views
     window.app = this;
@@ -32,7 +34,9 @@ class Application {
         this.vueListeRandonnee.initialiserListeRandonnee(randonnees);
         this.vueListeRandonnee.afficher();
       });
-    } else {
+    } else if(hash === "#checklist"){
+      this.vueChecklist.afficher();
+    }else {
       let navigation = hash.match(/^#randonnee\/([0-9]+)/);
       let idRandonnee = navigation[1];
       this.RandonneeDAO.chercher(idRandonnee).then((randonnee) => {
@@ -46,4 +50,4 @@ class Application {
   }
 }
 
-new Application(window, new RandonneeDAO(), new VueAccueil(), new VueListeRandonnee(), new VueRandonnee());
+new Application(window, new RandonneeDAO(), new VueAccueil(), new VueListeRandonnee(), new VueRandonnee(), new VueChecklist());
