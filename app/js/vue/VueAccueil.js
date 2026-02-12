@@ -6,6 +6,8 @@ class VueAccueil {
 
     afficher() {
         document.getElementsByTagName("body")[0].innerHTML = this.html;
+        const btn = document.getElementById("btn-theme-toggle");
+        if (btn) btn.addEventListener("click", () => toggleTheme());
 
         // Logic formerly in onDeviceReady is moved here so it runs when the view loads
         console.log('Ready');

@@ -1,3 +1,21 @@
+const THEME_KEY = "rando_theme_v1";
+
+function appliquerTheme(theme) {
+  document.body.classList.remove("theme-dark", "theme-light");
+  document.body.classList.add(theme);
+  localStorage.setItem(THEME_KEY, theme);
+}
+
+function chargerTheme() {
+  const saved = localStorage.getItem(THEME_KEY);
+  appliquerTheme(saved || "theme-dark"); // default
+}
+
+function toggleTheme() {
+  const isDark = document.body.classList.contains("theme-dark");
+  appliquerTheme(isDark ? "theme-light" : "theme-dark");
+}
+
 class Application {
   constructor(window, RandonneeDAO, vueAccueil, vueListeRandonnee, vueRandonnee, vueChecklist) {
     this.window = window;
@@ -5,9 +23,9 @@ class Application {
     this.vueAccueil = vueAccueil;
     this.vueListeRandonnee = vueListeRandonnee;
     this.vueRandonnee = vueRandonnee;
-    this.vueChecklist = new VueChecklist();
+    this.vueChecklist = vueChecklist;
 
-
+    
     // Store app instance globally for access from views
     window.app = this;
     if (window.cordova) {
@@ -17,10 +35,12 @@ class Application {
       this.initialiserNavigation();
     }
   }
+  
 
   initialiserNavigation() {
     console.log("Application-->initialiserNavigation");
     this.window.addEventListener("hashchange", () => this.naviguer());
+    chargerTheme();
     this.naviguer();
   }
 
