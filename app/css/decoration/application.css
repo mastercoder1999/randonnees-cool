@@ -692,3 +692,14 @@ body.theme-dark .page-checklist .empty { color: #e0e0e0; }
 body {
   transition: background 0.25s ease, color 0.25s ease;
 }
+.meteo-box{
+  width: 100%;
+  border: 2px solid #ffffff;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: clamp(12px, 3vw, 14px);
+}
+body.theme-light .meteo-box{
+  border-color:#111111;
+}
